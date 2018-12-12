@@ -8,11 +8,11 @@ import collections
 
 
 def Main():
-    numClientes=10
+    numClientes=100
     numSubRegioes=5
     tiposVeiculos=5
     horasJornada=7
-    listaClientes = [Vertices(random.uniform(0.001, 0.01),random.randint(10,1001), random.randint(1,11)) for i in range(0,numClientes)]
+    listaClientes = [Vertices(random.uniform(0.01, 0.001),random.randint(10,1001), random.randint(1,11)) for i in range(0,numClientes)]
     # NÃO ESQUECER QUE : os 5 primeiros clientes são centros de distribuição
     for i in range(5):
         listaClientes[i].volumeMáximo = 0
@@ -79,7 +79,7 @@ def Main():
         somaDosPedidos += listaClientes[i].volumePedido
     somaDosPedidos = somaDosPedidos/5
     somaDosPedidos = round(somaDosPedidos,5)
-    somaDosPedidos = somaDosPedidos*1.15 #Margem de erro de 15%
+    somaDosPedidos = somaDosPedidos*1 #Margem de erro de 7%
         
     #print(MatrizDeDistancias[0])
     #print(sorted(MatrizDeDistancias[0,0]))
@@ -126,7 +126,7 @@ def Main():
     area3 = [3]
     area4 = [4]
     verticesInseridos = []
-
+    print("Soma dos pedidos media: ", somaDosPedidos)
     fluxo0 = somaDosPedidos
     fluxo1 = somaDosPedidos
     fluxo2 = somaDosPedidos
@@ -154,6 +154,40 @@ def Main():
             area4.append(proximo4_chave[i])
             verticesInseridos.append(proximo4_chave[i])
             fluxo4 -= listaClientes[proximo4_chave[i]].volumePedido
+
+    print(area0)
+    print(area1)
+    print(area2)
+    print(area3)
+    print(area4)
+    
+    print()
+    for i in range(0,(numClientes-5)):
+        if(proximo0_chave[i] not in verticesInseridos):
+            area0.append(proximo0_chave[i])
+            verticesInseridos.append(proximo0_chave[i])
+            fluxo0 -= listaClientes[proximo0_chave[i]].volumePedido
+       
+        if(proximo1_chave[i] not in verticesInseridos ):
+            area1.append(proximo1_chave[i])
+            verticesInseridos.append(proximo1_chave[i] )
+            fluxo1 -= listaClientes[proximo1_chave[i]].volumePedido
+       
+        if(proximo2_chave[i] not in verticesInseridos ):
+            area2.append(proximo2_chave[i])
+            verticesInseridos.append(proximo2_chave[i])
+            fluxo2 -= listaClientes[proximo2_chave[i]].volumePedido
+       
+        if(proximo3_chave[i] not in verticesInseridos  ):
+            area3.append(proximo3_chave[i])
+            verticesInseridos.append(proximo3_chave[i])
+            fluxo3 -= listaClientes[proximo3_chave[i]].volumePedido
+        
+        if(proximo4_chave[i] not in verticesInseridos ):
+            area4.append(proximo4_chave[i])
+            verticesInseridos.append(proximo4_chave[i])
+            fluxo4 -= listaClientes[proximo4_chave[i]].volumePedido
+    
     
 
 
@@ -192,14 +226,14 @@ def Main():
     G4=nx.Graph()
 
      #Cria Imagem do Grafo
- 
+    '''
     pos=nx.get_node_attributes(G,'pos')
     nx.draw(G,pos,with_labels = True)
     labels = nx.get_edge_attributes(G,'weight')
     nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
     plt.draw()
     plt.show()
-
+    '''
     G0.add_node(0,pos0=(listaClientes[0].x,listaClientes[0].y))
     for i in area0:
         G0.add_node(i,pos0=(listaClientes[i].x,listaClientes[i].y))
@@ -246,13 +280,21 @@ def Main():
             if(i!=j):
                 G4.add_edge(i,j,weight= MatrizDeDistancias[i][j]['weight'])
 
+    print(somaDosPedidos-fluxo0)
+    print(somaDosPedidos-fluxo1)
+    print(somaDosPedidos-fluxo2)
+    print(somaDosPedidos-fluxo3)
+    print(somaDosPedidos-fluxo4)
+    print()
     print(fluxo0)
     print(fluxo1)
     print(fluxo2)
     print(fluxo3)
     print(fluxo4)
 
-   
+    print("Quantidade de clientes: ",len(verticesInseridos))
+
+    '''
     pos0=nx.get_node_attributes(G0,'pos0')
     nx.draw(G0,pos0,with_labels = True)
     labels = nx.get_edge_attributes(G0,'weight')
@@ -288,7 +330,7 @@ def Main():
     nx.draw_networkx_edge_labels(G4,pos4,edge_labels=labels)
     plt.draw()
     plt.show()
-    
+    '''
   
 
     
