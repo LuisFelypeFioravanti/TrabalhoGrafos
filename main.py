@@ -126,7 +126,7 @@ def Main():
     area3 = [3]
     area4 = [4]
     verticesInseridos = []
-    print("Soma dos pedidos media: ", somaDosPedidos)
+
     fluxo0 = somaDosPedidos
     fluxo1 = somaDosPedidos
     fluxo2 = somaDosPedidos
@@ -154,12 +154,18 @@ def Main():
             area4.append(proximo4_chave[i])
             verticesInseridos.append(proximo4_chave[i])
             fluxo4 -= listaClientes[proximo4_chave[i]].volumePedido
+    
+    print("Vetores Refetentes a cada Área")
 
-    print(area0)
-    print(area1)
-    print(area2)
-    print(area3)
-    print(area4)
+    print("Area 0: ",area0)
+   
+    print("Area 1: ",area1)
+
+    print("Area 2: ",area2)
+ 
+    print("Area 3: ",area3)
+
+    print("Area 4: ",area4)
     
     print()
     for i in range(0,(numClientes-5)):
@@ -188,36 +194,6 @@ def Main():
             verticesInseridos.append(proximo4_chave[i])
             fluxo4 -= listaClientes[proximo4_chave[i]].volumePedido
     
-    
-
-
-    print(area0)
-    print(area1)
-    print(area2)
-    print(area3)
-    print(area4)
-    '''
-    tamanho = 0
-    for i in area0:
-        tamanho+= MatrizDeDistancias[0][i]['weight']
-    print("Distancia 0: ",tamanho)
-    tamanho = 0
-    for i in area1:
-        tamanho+= MatrizDeDistancias[1][i]['weight']
-    print("Distancia 1: ",tamanho)
-    tamanho = 0
-    for i in area2:
-        tamanho+= MatrizDeDistancias[2][i]['weight']
-    print("Distancia 2: ",tamanho)
-    tamanho = 0
-    for i in area3:
-        tamanho+= MatrizDeDistancias[3][i]['weight']
-    print("Distancia 3: ",tamanho)
-    tamanho = 0
-    for i in area4:
-        tamanho+= MatrizDeDistancias[4][i]['weight']
-    print("Distancia 4: ",tamanho)
-    '''
 
     G0=nx.Graph()
     G1=nx.Graph()
@@ -226,14 +202,7 @@ def Main():
     G4=nx.Graph()
 
      #Cria Imagem do Grafo
-    '''
-    pos=nx.get_node_attributes(G,'pos')
-    nx.draw(G,pos,with_labels = True)
-    labels = nx.get_edge_attributes(G,'weight')
-    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-    plt.draw()
-    plt.show()
-    '''
+  
     G0.add_node(0,pos0=(listaClientes[0].x,listaClientes[0].y))
     for i in area0:
         G0.add_node(i,pos0=(listaClientes[i].x,listaClientes[i].y))
@@ -280,21 +249,34 @@ def Main():
             if(i!=j):
                 G4.add_edge(i,j,weight= MatrizDeDistancias[i][j]['weight'])
 
-    print(somaDosPedidos-fluxo0)
-    print(somaDosPedidos-fluxo1)
-    print(somaDosPedidos-fluxo2)
-    print(somaDosPedidos-fluxo3)
-    print(somaDosPedidos-fluxo4)
-    print()
-    print(fluxo0)
-    print(fluxo1)
-    print(fluxo2)
-    print(fluxo3)
-    print(fluxo4)
+    print("\nFluxo de Cada Centro de Distribuição")
+    print("Fluxo 0: ",somaDosPedidos-fluxo0)
+    print("Fluxo 1: ",somaDosPedidos-fluxo1)
+    print("Fluxo 2: ",somaDosPedidos-fluxo2)
+    print("Fluxo 3: ",somaDosPedidos-fluxo3)
+    print("Fluxo 4: ",somaDosPedidos-fluxo4)
 
-    print("Quantidade de clientes: ",len(verticesInseridos))
 
+    #Conversão das subdivisões para dicionário de dicionário
+    SubDivisao0= nx.to_dict_of_dicts(G0)
+    SubDivisao1= nx.to_dict_of_dicts(G1)
+    SubDivisao2= nx.to_dict_of_dicts(G2)
+    SubDivisao3= nx.to_dict_of_dicts(G3)
+    SubDivisao4= nx.to_dict_of_dicts(G4)
+
+
+
+    #Impressao dos Grafos, só descomentar!
     '''
+    #Grafo Completo
+    pos=nx.get_node_attributes(G,'pos')
+    nx.draw(G,pos,with_labels = True)
+    labels = nx.get_edge_attributes(G,'weight')
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+    plt.draw()
+    plt.show()
+    
+    #Subdivisão 0
     pos0=nx.get_node_attributes(G0,'pos0')
     nx.draw(G0,pos0,with_labels = True)
     labels = nx.get_edge_attributes(G0,'weight')
@@ -302,7 +284,7 @@ def Main():
     plt.draw()
     plt.show()    
 
-
+    #Subdivisão 1
     pos1=nx.get_node_attributes(G1,'pos1')
     nx.draw(G1,pos1,with_labels = True)
     labels = nx.get_edge_attributes(G1,'weight')
@@ -310,6 +292,7 @@ def Main():
     plt.draw()
     plt.show()
 
+    #Subdivisão 2
     pos2=nx.get_node_attributes(G2,'pos2')
     nx.draw(G2,pos2,with_labels = True)
     labels = nx.get_edge_attributes(G2,'weight')
@@ -317,6 +300,7 @@ def Main():
     plt.draw()
     plt.show()
 
+    #Subdivisão 3
     pos3=nx.get_node_attributes(G3,'pos3')
     nx.draw(G3,pos3,with_labels = True)
     labels = nx.get_edge_attributes(G3,'weight')
@@ -324,6 +308,7 @@ def Main():
     plt.draw()
     plt.show()
 
+    #Subdivisão 4
     pos4=nx.get_node_attributes(G4,'pos4')
     nx.draw(G4,pos4,with_labels = True)
     labels = nx.get_edge_attributes(G4,'weight')
@@ -331,20 +316,13 @@ def Main():
     plt.draw()
     plt.show()
     '''
-  
 
-    
-    
-   
-
-    
-
-
+#Método que calcula a distancia entre os pontos, o resultado é o peso das arestas!
 def calculaDistanciaEntrePontos(i, j):
     return round(((i.x - j.x)**2 + (i.y - j.y)**2)**0.5,2)
 
 
-
+#Ordenação utilizada para ordenar os clientes mais próximos de cada centro de dostribuição
 def bubbleSort(chave,peso):
     for passnum in range(len(peso)-1,0,-1):
         for i in range(passnum):
@@ -355,17 +333,5 @@ def bubbleSort(chave,peso):
                 chave[i]=chave[i+1]
                 peso[i+1] = temp
                 chave[i+1] = temp2
-
    
-'''
-def FW(M):
-    for k in range(4,numClientes):
-        for i in range(5):
-            for j in range(4,10):
-                if(i!=k and j!=k and i!=j):
-                    if(M[i][j]['weight']>=(M[i][k]['weight']+M[k][j]['weight']) ):
-                        M[i][j]['weight']=(M[i][k]['weight']+M[k][j]['weight'])
-'''
-
-    
 Main()
