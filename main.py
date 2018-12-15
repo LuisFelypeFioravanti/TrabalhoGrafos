@@ -8,16 +8,38 @@ import collections
 
 
 def Main():
-    numClientes=100
+    arquivo = open('entradaFalsa.txt','r')
+    leitura = arquivo.readlines()
+    numClientes=int(leitura[0])
+    numSubRegioes=int(leitura[1])
+    tiposVeiculos=int(leitura[2])
+    horasJornada=int(leitura[3])
+    listaClientes =[]
+    '''
+    numClientes=10
     numSubRegioes=5
     tiposVeiculos=5
-    horasJornada=7
-    listaClientes = [Vertices(random.uniform(0.01, 0.001),random.randint(10,1001), random.randint(1,11)) for i in range(0,numClientes)]
+    horasJornada = 7
+    '''
+    for cliente in range(4,(numClientes+4)):
+        volume,valor,qtd=leitura[cliente].split()
+        listaClientes.append(Vertices(int(volume),int(valor),int(qtd)))
+    
+    #listaClientes = [Vertices(random.uniform(0.01, 0.001),random.randint(10,1001), random.randint(1,11)) for i in range(0,numClientes)]
+    
     # NÃO ESQUECER QUE : os 5 primeiros clientes são centros de distribuição
     for i in range(5):
         listaClientes[i].volumeMáximo = 0
         listaClientes[i].valorMáximo = 0
         listaClientes[i].qtdVeiculos = 0
+
+    veiculos=[]
+
+    for veiculo in range((4+numClientes),((4+numClientes) + 4 ) ):
+        V,P,Nv,td,ph,pkm,pf=leitura[veiculo].split()
+        veiculos.append((float(V),float(P),float(Nv),25, 30, 0.01,float(td),float(ph),float(pkm),float(pf)))
+    
+    '''
     veiculos = [Veiculo(0, 0, 0, 25, 30, 0.01, 0, 0, 0, 0) for i in range(5)]
 
     # Tipo 0: Van
@@ -60,6 +82,11 @@ def Main():
     veiculos[4].ph = 0
     veiculos[4].pkm = random.randint(2,4)
     veiculos[4].pf = 0
+
+    for i in range(5):
+        print(veiculos[i].V ," ",veiculos[i].P ," ",veiculos[i].Nv," ",veiculos[i].td," ",veiculos[i].ph," ",veiculos[i].pkm," ",veiculos[i].pf)
+    '''
+
 
     #Montando o Grafo
     G=nx.Graph()
