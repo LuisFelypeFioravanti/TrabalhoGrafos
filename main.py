@@ -8,7 +8,7 @@ import collections
 
 
 def Main():
-    arquivo = open('entradaFalsa.txt','r')
+    arquivo = open('instanciaMayron.txt','r')
     leitura = arquivo.readlines()
     numClientes=int(leitura[0])
     numSubRegioes=int(leitura[1])
@@ -22,8 +22,8 @@ def Main():
     horasJornada = 7
     '''
     for cliente in range(4,(numClientes+4)):
-        volume,valor,qtd=leitura[cliente].split()
-        listaClientes.append(Vertices(int(volume),int(valor),int(qtd)))
+        x,y,volume,valor,qtd=leitura[cliente].split()
+        listaClientes.append(Vertices(float(x),float(y),float(volume),float(valor),float(qtd)))
     
     #listaClientes = [Vertices(random.uniform(0.01, 0.001),random.randint(10,1001), random.randint(1,11)) for i in range(0,numClientes)]
     
@@ -36,8 +36,8 @@ def Main():
     veiculos=[]
 
     for veiculo in range((4+numClientes),((4+numClientes) + 4 ) ):
-        V,P,Nv,td,ph,pkm,pf=leitura[veiculo].split()
-        veiculos.append((float(V),float(P),float(Nv),25, 30, 0.01,float(td),float(ph),float(pkm),float(pf)))
+        V,P,Nv,Vf,Vd,tc,td,ph,pkm,pf=leitura[veiculo].split()
+        veiculos.append((float(V),float(P),float(Nv),float(Vf),float(Vd),float(tc),float(td),float(ph),float(pkm),float(pf)))
     
     '''
     veiculos = [Veiculo(0, 0, 0, 25, 30, 0.01, 0, 0, 0, 0) for i in range(5)]
