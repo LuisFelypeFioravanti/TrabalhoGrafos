@@ -283,6 +283,14 @@ def Main():
     print("Fluxo 3: ",somaDosPedidos-fluxo3)
     print("Fluxo 4: ",somaDosPedidos-fluxo4)
 
+    arq = open('saida.txt', 'w')
+    arq.write(str(somaDosPedidos-fluxo0))
+    arq.write(str(somaDosPedidos-fluxo1))
+    arq.write(str(somaDosPedidos-fluxo2))
+    arq.write(str(somaDosPedidos-fluxo3))
+    arq.write(str(somaDosPedidos-fluxo4))
+    arq.close()
+
 
     #Conversão das subdivisões para dicionário de dicionário
     SubDivisao0= nx.to_dict_of_dicts(G0)
@@ -292,9 +300,9 @@ def Main():
     SubDivisao4= nx.to_dict_of_dicts(G4)
 
 
-
-    #Impressao dos Grafos, só descomentar!
     '''
+    #Impressao dos Grafos, só descomentar!
+    
     #Grafo Completo
     pos=nx.get_node_attributes(G,'pos')
     nx.draw(G,pos,with_labels = True)
@@ -343,6 +351,7 @@ def Main():
     plt.draw()
     plt.show()
     '''
+    
 
 #Método que calcula a distancia entre os pontos, o resultado é o peso das arestas!
 def calculaDistanciaEntrePontos(i, j):
